@@ -1,22 +1,22 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '61ce050f0d136b659d23880ed335e402f025c401',
+        'reference' => '42f18249eb8cd575f85f9679218740d433448eea',
         'name' => '__root__',
         'dev' => true,
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '61ce050f0d136b659d23880ed335e402f025c401',
+            'reference' => '42f18249eb8cd575f85f9679218740d433448eea',
             'dev_requirement' => false,
         ),
         'composer/semver' => array(
