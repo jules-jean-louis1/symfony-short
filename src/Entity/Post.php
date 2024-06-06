@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\User;
 use App\Repository\PostRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,8 +24,9 @@ class Post
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
 
-    #[ORM\Column]
-    private ?int $owner_id = null;
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: "owner_id", referencedColumnName: "id")]
+    private ?User $owner = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created_at = null;
@@ -73,15 +75,15 @@ class Post
         return $this;
     }
 
-    public function getOwnerId(): ?int
+    public function getOwner(): ?User
     {
-        return $this->owner_id;
+        return $this->owner;
     }
-
-    public function setOwnerId(int $owner_id): static
+    
+    public function setOwner(?User $owner): self
     {
-        $this->owner_id = $owner_id;
-
+        $this->owner = $owner;
+    
         return $this;
     }
 

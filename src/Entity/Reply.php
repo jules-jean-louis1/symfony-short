@@ -20,7 +20,8 @@ class Reply
     #[ORM\Column]
     private ?int $user_id = null;
 
-    #[ORM\Column]
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id")]
     private ?int $parent_id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -28,6 +29,10 @@ class Reply
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updated_at = null;
+
+    #[ORM\ManyToOne(targetEntity: Post::class)]
+    #[ORM\JoinColumn(name: "post_id", referencedColumnName: "id")]
+    private ?int $post_id = null;
 
     public function getId(): ?int
     {
@@ -90,6 +95,18 @@ class Reply
     public function setUpdatedAt(?\DateTimeInterface $updated_at): static
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    public function getPostId(): ?int
+    {
+        return $this->post_id;
+    }
+
+    public function setPostId(int $post_id): static
+    {
+        $this->post_id = $post_id;
 
         return $this;
     }
