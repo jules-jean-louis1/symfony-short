@@ -9,12 +9,9 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/home/jules/Documents/Ecole/Dev/symfony-short/src/Controller/PostController.php</code></li>
-        <li>Your template at <code>/home/jules/Documents/Ecole/Dev/symfony-short/templates/post/index.html.twig</code></li>
-    </ul>
+    {% for post in posts %}
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+{% endfor %}
 </div>
 {% endblock %}

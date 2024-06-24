@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\Type\PostAddType;
+use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,10 +15,12 @@ use Symfony\Component\Routing\Attribute\Route;
 class PostController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
+    private PostRepository $postRepository;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, PostRepository $postRepository)
     {
         $this->entityManager = $entityManager;
+        $this->postRepository = $postRepository;
     }
 
     #[Route('/posts', name: 'app_post')]
@@ -55,6 +58,15 @@ class PostController extends AbstractController
         }
         return $this->render('post/add/index.html.twig', [
             'formAddPost' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/posts', name: 'app_posts')]
+    public function getAllPost(): Response
+    {
+        $posts = $this->postRepository->findAll();
+        return $this->render('posts/index.html.twig', [
+            'posts' => $posts
         ]);
     }
 }
