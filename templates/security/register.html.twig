@@ -1,0 +1,10 @@
+<form method="post">
+    {{ form_start(registerForm) }}
+    {{ form_row(registerForm.firstname) }}
+    {{ form_row(registerForm.lastname) }}
+    {{ form_row(registerForm.email) }}
+    {{ form_row(registerForm.password) }}
+    
+    <button type="submit">Register</button>
+    {{ form_end(registerForm) }}
+</form>
