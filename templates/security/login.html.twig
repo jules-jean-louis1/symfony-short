@@ -1,0 +1,11 @@
+<form method="post">
+    {{ form_start(loginForm) }}
+    {{ form_row(loginForm.email) }}
+    {{ form_row(loginForm.password) }}
+
+    <button type="submit">Login</button>
+    {{ form_end(loginForm) }}
+</form>
+
+{{ dump(app.session.get('user')) }}
+{{ dump(app.session.get('csrf_token')) }}
