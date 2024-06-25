@@ -3,4 +3,10 @@
         <h1>{{ post.title }}</h1>
         <p>{{ post.content }}</p>
     </div>
+    
+    <h2>Comments</h2>
+    <!-- Existing comments rendering -->
+
+    <h3>Add a comment</h3>
+    {{ comment_form|raw }}
 {% endblock %}

@@ -74,10 +74,12 @@ class PostController extends AbstractController
     }
 
     #[Route('/post/{id}', name: 'app_show_post')]
-    public function show(Post $post): Response
+    public function show(Post $post, CommentController $commentController, SessionInterface $session, EntityManagerInterface $entityManager, Request $request): Response
     {
+        $commentController = $commentController->add($request, $post, $session, $entityManager);
         return $this->render('post/show.html.twig', [
-            'post' => $post
+            'post' => $post,
+            'comment_form' => $commentController->getContent()
         ]);
     }
 

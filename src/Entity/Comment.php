@@ -17,18 +17,15 @@ class Comment
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
-    #[ORM\Column]
-    private ?int $user_id = null;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $created_at = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updated_at = null;
-
-    #[ORM\ManyToOne(targetEntity: Post::class)]
-    #[ORM\JoinColumn(name: "post_id", referencedColumnName: "id")]
-    private ?int $post_id = null;
+    
+    #[ORM\ManyToOne(targetEntity: User::class)]
+    #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id")]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -47,14 +44,14 @@ class Comment
         return $this;
     }
 
-    public function getUserId(): ?int
+    public function getUser(): ?User
     {
-        return $this->user_id;
+        return $this->user;
     }
 
-    public function setUserId(int $user_id): static
+    public function setUser(User $user): self
     {
-        $this->user_id = $user_id;
+        $this->user = $user;
 
         return $this;
     }
@@ -83,14 +80,18 @@ class Comment
         return $this;
     }
 
-    public function getPostId(): ?int
+    #[ORM\ManyToOne(targetEntity: Post::class)]
+    #[ORM\JoinColumn(name: "post_id", referencedColumnName: "id")]
+    private ?Post $post = null;
+
+    public function getPost(): ?Post
     {
-        return $this->post_id;
+        return $this->post;
     }
 
-    public function setPostId(int $post_id): static
+    public function setPost(Post $post): static
     {
-        $this->post_id = $post_id;
+        $this->post = $post;
 
         return $this;
     }
