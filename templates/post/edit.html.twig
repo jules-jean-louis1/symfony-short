@@ -1,0 +1,9 @@
+{% block body %}
+    <form method="post">
+        {{ form_start(formEdit) }}
+        {{ form_row(formEdit.title) }}
+        {{ form_row(formEdit.content) }}
+        <button type="submit">Modifier</button>
+        {{ form_end(formEdit) }}
+    </form>
+{% endblock %}
