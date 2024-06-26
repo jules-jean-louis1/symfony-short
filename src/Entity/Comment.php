@@ -25,8 +25,8 @@ class Comment
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updated_at = null;
-    
-    #[ORM\ManyToOne(targetEntity: User::class)]
+
+    #[ORM\ManyToOne(targetEntity: User::class, cascade: ["persist"])]
     #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id")]
     private ?User $user = null;
 

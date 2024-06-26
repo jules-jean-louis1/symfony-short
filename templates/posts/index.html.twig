@@ -3,15 +3,29 @@
 {% block title %}Hello PostController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
 
-<div class="example-wrapper">
-    {% for post in posts %}
-        <h2>{{ post.title }}</h2>
-        <p>{{ post.content }}</p>
-    {% endfor %}
-</div>
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        {% for post in posts %}
+            <div>
+                <a href="/post/{{ post.id }}">
+                    <h2>{{ post.title }}</h2>
+                </a>
+                <p>{{ post.content }}</p>
+            </div>
+
+        {% endfor %}
+    </div>
 {% endblock %}

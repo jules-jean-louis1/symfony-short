@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Comment;
 use App\Entity\Post;
+use App\Entity\User;
 use App\Form\Type\CommentType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -30,7 +31,12 @@ class CommentController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $commentData = $form->getData();
-            $user = $session->get('user');
+            $userId = $session->get('user')->getId();
+            $user = $entityManager->getRepository(User::class)->find($userId);
+
+            if (!$user) {
+                throw $this->createNotFoundException('Utilisateur non trouvé');
+            }
 
             $comment = new Comment();
             $comment->setUser($user)

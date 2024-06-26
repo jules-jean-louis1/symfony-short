@@ -14,6 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class UserController extends AbstractController
 {
     private EntityManagerInterface $entityManager;
+
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
@@ -26,22 +27,35 @@ class UserController extends AbstractController
             'controller_name' => 'UserController',
         ]);
     }
-    #[Route('/profile', name: 'app_profile')]
-    public function edit(Request $request, SessionInterface $session, EntityManagerInterface $entityManager): Response
-    {
-        $user = $session->get('user');
-        $userData = $this->entityManager->getRepository(User::class)->find($user->getId());
 
-        $form = $this->createForm(UserType::class, $userData);
+    public function edit(Request $request, SessionInterface $session): Response
+    {
+        $data = $session->get('user');
+        $userId = $data->getId();
+
+        if (!$userId) {
+            return new Response('Utilisateur non trouvé', Response::HTTP_FORBIDDEN);
+        }
+
+        $user = $this->entityManager->getRepository(User::class)->find($userId);
+
+        if (!$user) {
+            return new Response('Utilisateur non trouvé', Response::HTTP_NOT_FOUND);
+        }
+
+        $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $edit = $form->getData();
-            $entityManager->persist($edit);
-            $entityManager->flush();
+            $user = $form->getData();
+            $this->entityManager->persist($user);
+            $this->entityManager->flush();
+
+            // Mise à jour de la session
+            $session->set('user', $user);
         }
 
-        return $this->render('user/index.html.twig', [
+        return $this->render('user/_edit_form.html.twig', [
             'EditForm' => $form->createView(),
         ]);
     }

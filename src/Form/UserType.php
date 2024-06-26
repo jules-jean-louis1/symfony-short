@@ -32,14 +32,6 @@ class UserType extends AbstractType
             ->add('avatar', null, [
                 'attr' => ['class' => 'form-control'],
             ])
-            ->add('created_at', null, [
-                'widget' => 'single_text',
-                'attr' => ['class' => 'form-control'],
-            ])
-            ->add('updated_at', null, [
-                'widget' => 'single_text',
-                'attr' => ['class' => 'form-control'],
-            ])
             ->add('save', SubmitType::class,[
                 'label' => 'Modifier votre profil',
                 'attr' => ['class' => 'btn btn-primary'],
