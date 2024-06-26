@@ -27,14 +27,13 @@ class CommentController extends AbstractController
     {
         $form = $this->createForm(CommentType::class);
         $form->handleRequest($request);
-        $id = $post->getId();
-        $userId = $session->getId();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $commentData = $form->getData();
+            $user = $session->get('user');
 
             $comment = new Comment();
-            $comment->setUserId(intval($userId))
+            $comment->setUser($user)
                 ->setContent($commentData->getContent())
                 ->setPost($post)
                 ->setCreatedAt(new \DateTimeImmutable());

@@ -41,6 +41,8 @@ class SecurityController extends AbstractController
                 $session->set('user', $user);
                 $this->addFlash('success', 'Vous êtes connecté.');
 
+                return $this->redirectToRoute('app_home');
+
             } else {
                 $this->addFlash('danger', 'Identifiants incorrects.');
             }
@@ -65,7 +67,7 @@ class SecurityController extends AbstractController
             $this->entityManager->persist($user);
             $this->entityManager->flush();
 
-            return $this->redirectToRoute('app_home');
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('security/register.html.twig', [
