@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Form\Type\PostAddType;
@@ -77,9 +78,11 @@ class PostController extends AbstractController
     public function show(Post $post, CommentController $commentController, SessionInterface $session, EntityManagerInterface $entityManager, Request $request): Response
     {
         $commentController = $commentController->add($request, $post, $session, $entityManager);
+        $commentDisplay = $this->entityManager->getRepository(Comment::class)->findBy(['post' => $post]);
         return $this->render('post/show.html.twig', [
             'post' => $post,
-            'comment_form' => $commentController->getContent()
+            'comment_form' => $commentController->getContent(),
+            'CommentData' => $commentDisplay
         ]);
     }
 

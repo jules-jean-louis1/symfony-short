@@ -16,6 +16,32 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
+    public function findBy(array $criteria, array|null $orderBy = null, int|null $limit = null, int|null $offset = null): array
+    {
+        $queryBuilder = $this->createQueryBuilder('u');
+
+        foreach ($criteria as $field => $value) {
+            $queryBuilder
+                ->andWhere('u.' . $field . ' = :' . $field)
+                ->setParameter($field, $value);
+        }
+
+        if ($orderBy) {
+            foreach ($orderBy as $field => $order) {
+                $queryBuilder->addOrderBy('u.' . $field, $order);
+            }
+        }
+
+        if ($limit) {
+            $queryBuilder->setMaxResults($limit);
+        }
+
+        if ($offset) {
+            $queryBuilder->setFirstResult($offset);
+        }
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 //    /**
 //     * @return Comment[] Returns an array of Comment objects
 //     */

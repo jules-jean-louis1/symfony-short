@@ -3,10 +3,18 @@
         <h1>{{ post.title }}</h1>
         <p>{{ post.content }}</p>
     </div>
-    
+
     <h2>Comments</h2>
     <!-- Existing comments rendering -->
 
     <h3>Add a comment</h3>
     {{ comment_form|raw }}
+{#    {{ dump(CommentData) }}#}
+    <div>
+        {% for comment in CommentData %}
+            <p>{{ comment.content }}</p>
+            <p>{{ comment.createdAt|date('Y-m-d H:i') }}</p>
+            <p>{{ comment.user.email }}</p>
+        {% endfor %}
+    </div>
 {% endblock %}
